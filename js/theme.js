@@ -1,4 +1,5 @@
-var render_to_theme = 'theme_js';
+const render_to_theme = 'theme_js';
+const potential_theme_entries_div = 'theme0';
 
 function render_theme() {
     display_grid(render_to_theme);
@@ -7,18 +8,18 @@ function render_theme() {
     let list_of_lists_of_potential_theme_entries = document.createElement('div');
 
     let buttonLabels = ['Clues', 'Entries'];
-    let buttonActions = [function() { toggleByClass('entry') }, function() { toggleByClass('clue') }];
+    let buttonActions = [function () { toggleByClass('clue') }, function () { toggleByClass('entry') }];
     add_buttons(list_of_lists_of_potential_theme_entries, buttonLabels, buttonActions);
 
     create_twisty(list_of_lists_of_potential_theme_entries, 'toggle-starred', 'starred');
-    add_named_section(list_of_lists_of_potential_theme_entries, 'STARRED CLUES & ENTRIES',
+    add_named_section(list_of_lists_of_potential_theme_entries, 'STARRED CLUES',
         display_starred_clues(PUZAPP.puzdata));
 
     create_twisty(list_of_lists_of_potential_theme_entries, 'toggle-long', 'long');
     add_named_section(list_of_lists_of_potential_theme_entries, 'LONG ENTRIES',
         display_long_entries_and_common_substrings(PUZAPP.puzdata, min_theme_len));
 
-    document.getElementById(render_to_theme).appendChild(list_of_lists_of_potential_theme_entries);
+    document.getElementById(potential_theme_entries_div).appendChild(list_of_lists_of_potential_theme_entries);
 }
 
 // append a <div> containing n <button> elements defined by an n-sized array of labels
@@ -29,7 +30,7 @@ function add_buttons(parent, labelsArr, onClickArr) {
     for (let i = 0; i < labelsArr.length; ++i) {
         let b = document.createElement('button');
         b.appendChild(document.createTextNode(labelsArr[i]));
-        b.onclick = function() { onClickArr[i]() };
+        b.onclick = function () { onClickArr[i]() };
         buttons.appendChild(b);
     }
     parent.appendChild(buttons);
@@ -55,7 +56,7 @@ function create_twisty(parent, toggleName, toggledId) {
     toggleLabel.style.float = 'left';
     toggleLabel.style.marginRight = '5px';
     toggleLabel.appendChild(toggled);
-    toggleLabel.onclick = function() { swap_label(toggleLabel, toggled, untoggled) };
+    toggleLabel.onclick = function () { swap_label(toggleLabel, toggled, untoggled) };
 
     parent.appendChild(showHide);
     parent.appendChild(toggleLabel);
@@ -112,7 +113,7 @@ function display_starred_clues(puzdata) {
 
 function add_items(elem, entries, clues) {
     "use strict";
-    for(let i = 0; i < entries.length; ++i) {
+    for (let i = 0; i < entries.length; ++i) {
         let clueDiv = document.createElement('div');
         let entryDiv = document.createElement('div');
         let clue = document.createElement('span');
@@ -120,7 +121,7 @@ function add_items(elem, entries, clues) {
         clueDiv.className = 'clue';
         entryDiv.className = 'entry';
         if (i % 2 === 0) {
-            clueDiv.className  += ' hilight';
+            clueDiv.className += ' hilight';
             entryDiv.className += ' hilight';
         }
         clue.appendChild(document.createTextNode(clues[i]));
@@ -324,5 +325,5 @@ function toggleByClass(classTag) {
 function flipDisplay(style) {
     "use strict";
 
-    style.display = style.display === 'none' ? '': 'none';
+    style.display = style.display === 'none' ? '' : 'none';
 }

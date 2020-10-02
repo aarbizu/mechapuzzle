@@ -177,8 +177,8 @@ var ActiveXObject, parsedPuz, filecontents, PUZAPP = {};
         if (!sanity_check) {
             alert('Not a .puz file!');
             throw {
-                name: "BADMAGICNUMBER",
-                message: "File did not contain expected magic number, contained '" + filemagic + "'."
+                name: "MISSINGACROSS&DOWN",
+                message: "Could find string 'ACROSS&DOWN' in puzzle."
             };
         }
         var retval = new Puz(),
@@ -354,6 +354,9 @@ var ActiveXObject, parsedPuz, filecontents, PUZAPP = {};
         retval.across_clues = across_clues;
         retval.down_clues = down_clues;
         retval.down_entries = down_entries;
+
+        // theme
+        retval.theme = [d3.set(), d3.set()];
 
         PUZAPP.puzdata = retval;
 
